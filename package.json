@@ -1,0 +1,25 @@
+{
+  "name": "crmapp",
+  "version": "1.0.0",
+  "description": "This is a CRM APP ",
+  "homepage": "https://github.com/dnathkoushik/crmApp#readme",
+  "bugs": {
+    "url": "https://github.com/dnathkoushik/crmApp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dnathkoushik/crmApp.git"
+  },
+  "license": "ISC",
+  "author": "Koushik Debnath",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.3"
+  }
+}
