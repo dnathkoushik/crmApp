@@ -33,3 +33,31 @@ exports.signUp = async (req, res) => {
         });
     }
 };
+
+exports.signIn = async (req, res) => {
+    // Sign in logic here
+    const request_body = req.body;
+    try{
+        const user = await userModel.findOne({ userId: request_body.userId });
+        if(!user){
+            return res.status(404).send({ message: "User not found" });
+        }
+        const passwordIsValid = bcrypt.compareSync(request_body.password, user.password);
+        if(!passwordIsValid){
+            return res.status(401).send({ message: "Invalid Password" });
+        }
+        const response = {
+            name: user.name,
+            userId: user.userId,
+            email: user.email,
+            userType: user.userType,
+            userStatus: user.userStatus
+        };
+        res.status(200).send(response);
+    } catch(err){
+        console.log("Error while signing in", err);
+        res.status(500).send({
+            message: "Error while signing in"
+        });
+    }
+};
