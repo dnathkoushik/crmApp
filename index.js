@@ -43,5 +43,6 @@ connectDB();
 //Middleware to parse JSON requests
 app.use(express.json());
 
-//conect the auth routes
-require('./routes/auth.route')(app);
+//Importing and using the auth routes
+const authRoutes = require('./routes/auth.route');
+app.use('/crmApp/api/v1', authRoutes);

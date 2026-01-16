@@ -1,4 +1,5 @@
 const moongoose = require('mongoose');
+const constants = require('../utils/constants');
 
 const userSchema = new moongoose.Schema({
     name : {
@@ -24,13 +25,13 @@ const userSchema = new moongoose.Schema({
     },
     userType : {
         type : String,
-        enum : ['CUSTOMER', 'ADMIN', 'ENGINEER'],
+        enum : Object.values(constants.USER_TYPES),
         default : 'CUSTOMER',
         required: true
     },
     userStatus : {
         type : String,
-        enum : ['APPROVED', 'PENDING', 'BLOCKED'],
+        enum : Object.values(constants.USER_STATUS),
         default : 'APPROVED',
         required: true
     }

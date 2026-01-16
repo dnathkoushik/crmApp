@@ -1,6 +1,9 @@
-const userController = require('../controllers/auth.controller');
+const express = require('express');
+const route = express.Router();
+const authController = require('../controllers/auth.controller');
+const authMw = require('../middleWares/auth.mw');
 
-module.exports = (app) => {
-    app.post('/crmApp/api/v1/auth/signup', userController.signUp);
-    app.post('/crmApp/api/v1/auth/signin', userController.signIn);
-}
+//SignUp Route
+route.post('/auth/signup', authMw.validateUserRequestBody, authController.signUp);
+
+module.exports = route;
