@@ -1,7 +1,7 @@
 const userModel = require('../models/user.model');
 const constants = require('../utils/constants');
 
-exports.validateUserRequestBody = async (req, res, next) => {
+exports.validateSignUpRequestBody = async (req, res, next) => {
     if(!req.body.name){
         return res.status(400).send({ message: "Name is required" });
     }
@@ -35,6 +35,17 @@ exports.validateUserRequestBody = async (req, res, next) => {
         return res.status(400).send({ message: "Invalid userType. Valid types are " + validUserTypes.join(', ') });
     }
     
+    next();
+};
+
+exports.validateSignInRequestBody = async (req, res, next) => {
+    if(!req.body.userId){
+        return res.status(400).send({ message: "UserId is required" });
+    }
+    if(!req.body.password){
+        return res.status(400).send({ message: "Password is required" });
+    }
+
     next();
 };
 
