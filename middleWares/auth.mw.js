@@ -72,7 +72,7 @@ exports.validateToken = (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
     const user = await userModel.findOne({ userId: req.userId });
-    if (user.userType === constants.USER_TYPES.ADMIN) {
+    if (user && user.userType === constants.USER_TYPES.ADMIN) {
         next();
         return;
     }
