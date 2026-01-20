@@ -5,5 +5,6 @@ const authMW = require('../middleWares/auth.mw');
 
 //Route to get all users - only accessible by ADMIN users
 route.get('/users', [authMW.validateToken, authMW.isAdmin], userController.findAllUsers);
+route.put('/auth/changeStatus/:userId', [authMW.validateToken, authMW.isAdmin], userController.changeUserStatus);
 
 module.exports = route;

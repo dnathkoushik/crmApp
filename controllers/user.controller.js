@@ -8,3 +8,20 @@ exports.findAllUsers = async (req, res) => {
     const userResponse = objectConverter.userResponse(users);
     res.status(200).json(userResponse);
 };
+
+exports.changeUserStatus = async (req, res) => {
+    const userId = req.params.userId;
+    const newStatus = req.body.userStatus;
+    try {
+        const user = await User.findOne({ userId: userId });
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+        user.userStatus = newStatus;
+        await user.save();
+        res.status(200).send({ message: "User status updated successfully" });
+    } catch (err) {
+        console.log('Error while changing user status', err);
+        res.status(500).send({ message: "Internal Server Error while updating user status" });
+    }
+};
