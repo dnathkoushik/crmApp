@@ -22,6 +22,6 @@ exports.changeUserStatus = async (req, res) => {
         res.status(200).send({ message: "User status updated successfully" });
     } catch (err) {
         console.log('Error while changing user status', err);
-        res.status(500).send({ message: "Internal Server Error while updating user status" });
+        res.status(500).send({ message: "Internal Error while updating user status" });
     }
 };
