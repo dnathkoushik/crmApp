@@ -55,3 +55,21 @@ exports.changeUserStatus = async (req, res) => {
         res.status(500).send({ message: "Internal Error while updating user status" });
     }
 };
+
+//controller to change userType 
+exports.changeUserType = async (req, res) => {
+    const userId = req.params.userId;
+    const newType = req.body.userType;
+    try {
+        const user = await User.findOne({ userId: userId });
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+        user.userType = newType;
+        await user.save();
+        res.status(200).send({ message: "User type updated successfully" });
+    } catch (err) {
+        console.log('Error while changing user type', err);
+        res.status(500).send({ message: "Internal Error while updating user type" });
+    }
+};
