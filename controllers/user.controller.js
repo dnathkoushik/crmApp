@@ -21,6 +21,24 @@ exports.findAllUsers = async (req, res) => {
     res.status(200).json(userResponse);
 };
 
+//controller to find a user based on their userId
+exports.findUserById = async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        const user = await User.findOne({ userId: userId });
+        if (!user) {
+            return res.status(404).send({ message: "User not found with the given userId" });
+        }
+        const userResponse = objectConverter.userResponse([user]);
+        res.status(200).json(userResponse[0]);
+    } catch (err) {
+        console.log('Error while fetching user by ID', err);
+        res.status(500).send({ message: "Internal Error while fetching user" });
+    }
+};
+
+//controller to change the status of a user
+
 exports.changeUserStatus = async (req, res) => {
     const userId = req.params.userId;
     const newStatus = req.body.userStatus;
