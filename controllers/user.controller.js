@@ -4,7 +4,19 @@ const objectConverter = require('../utils/objectConverter');
 
 //Controller to fetch all the users details
 exports.findAllUsers = async (req, res) => {
-    const users = await User.find({});
+    //start supporting the query params 
+    let userTypeReq = req.query.userType;
+    let userStatusReq = req.query.userStatus;
+    const userQry = {};
+
+    if (userTypeReq) {
+        userQry.userType = userTypeReq;
+    }
+    if (userStatusReq) {
+        userQry.userStatus = userStatusReq;
+    }
+
+    const users = await User.find(userQry);
     const userResponse = objectConverter.userResponse(users);
     res.status(200).json(userResponse);
 };
