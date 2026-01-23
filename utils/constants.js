@@ -8,5 +8,10 @@ module.exports = {
         APPROVED: 'APPROVED',
         PENDING: 'PENDING',
         REJECTED: 'REJECTED'
+    },
+    ticketStatuses: {
+        OPEN: 'OPEN',
+        CLOSED: 'CLOSED',
+        BLOCKED: 'BLOCKED',
     }
 };
