@@ -80,3 +80,18 @@ exports.changeUserType = async (req, res) => {
         res.status(500).send({ message: "Internal Error while updating user type" });
     }
 };
+
+//controller to delete a user
+exports.deleteUserById = async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        const user = await User.findOneAndDelete({ userId: userId });
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+        res.status(200).send({ message: "User deleted successfully" });
+    } catch (err) {
+        console.log('Error while deleting user', err);
+        res.status(500).send({ message: "Internal Error while deleting user" });
+    }
+};

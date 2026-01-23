@@ -8,5 +8,6 @@ route.get('/users', [authMW.validateToken, authMW.isAdmin], userController.findA
 route.put('/auth/changeStatus/:userId', [authMW.validateToken, authMW.isAdmin], userController.changeUserStatus);
 route.get('/users/:userId', [authMW.validateToken, authMW.isAdmin], userController.findUserById);
 route.put('/auth/changeType/:userId', [authMW.validateToken, authMW.isAdmin], userController.changeUserType);
+route.delete('/users/deleteUser/:userId', [authMW.validateToken, authMW.isAdmin], userController.deleteUserById);
 
 module.exports = route;
