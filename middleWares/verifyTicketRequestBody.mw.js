@@ -1,3 +1,5 @@
+const constants = require('../utils/constants');
+
 const validateTicketRequestBody = (req, res, next) => {
     if(!req.body.title){
         return res.status(400).send({ message: "Title is required" });
@@ -12,6 +14,15 @@ const validateTicketRequestBody = (req, res, next) => {
     next();
 }
 
+const validateTicketStatus = (req, res, next) => {
+    const validStatuses = constants.ticketStatuses;
+    if(req.body.status && !Object.values(validStatuses).includes(req.body.status)){
+        return res.status(400).send({ message: `Status must be one of the following: ${Object.values(validStatuses).join(', ')}` });
+    }
+    next();
+}
+
 module.exports = {
-    validateTicketRequestBody : validateTicketRequestBody
+    validateTicketRequestBody: validateTicketRequestBody,
+    validateTicketStatus: validateTicketStatus
 };

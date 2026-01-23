@@ -21,18 +21,40 @@ exports.createTicket = async (req, res) => {
     }
     try{
         const newTicket = await ticketModel.create(ticketObj);
-        res.status(201).send({
-            title: newTicket.title,
-            ticketPriority: newTicket.ticketPriority,
-            description: newTicket.description,
-            status: newTicket.status,
-            reporter: newTicket.reporter,
-            assignee: newTicket.assignee,
-        });
+        res.status(201).send(newTicket);
     } catch(err){
         console.log('Error while creating ticket', err);
         res.status(500).send({
             message: 'Internal Server Error while creating ticket'
+        });
+    }
+};
+
+exports.updateTicket = async (req, res) => {
+    const ticketId = req.params.ticketId;
+
+    const ticket = await ticketModel.findOne({ _id: ticketId });
+    const callingUserDetails = await userModel.findOne({ userId: req.userId });
+
+    //I want to check if the right user is updating the ticket
+    if(ticket.reporter !== req.userId && ticket.assignee !== req.userId && callingUserDetails.userType !== constants.USER_TYPES.ADMIN){
+        return res.status(403).send({
+            message: 'Forbidden: You cannot update this ticket'
+        });
+    }
+    try{
+        ticket.title = req.body.title ? req.body.title : ticket.title;
+        ticket.ticketPriority = req.body.ticketPriority ? req.body.ticketPriority : ticket.ticketPriority;
+        ticket.description = req.body.description ? req.body.description : ticket.description;
+        ticket.status = req.body.status ? req.body.status : ticket.status;
+        ticket.assignee = req.body.assignee ? req.body.assignee : ticket.assignee;
+
+        const updatedTicket = await ticket.save();
+        res.status(200).send(updatedTicket);
+    } catch(err){
+        console.log('Error while updating ticket', err);
+        res.status(500).send({
+            message: 'Internal Server Error while updating ticket'
         });
     }
 };
