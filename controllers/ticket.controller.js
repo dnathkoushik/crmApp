@@ -4,7 +4,7 @@ const ticketModel = require('../models/ticket.model');
 const userModel = require('../models/user.model');
 const constants = require('../utils/constants');
 
-ecports.createTicket = async (req, res) => {
+exports.createTicket = async (req, res) => {
     const ticketObj = {
         title: req.body.title,
         ticketPriority: req.body.ticketPriority,
@@ -21,7 +21,14 @@ ecports.createTicket = async (req, res) => {
     }
     try{
         const newTicket = await ticketModel.create(ticketObj);
-        res.status(201).send(newTicket);
+        res.status(201).send({
+            title: newTicket.title,
+            ticketPriority: newTicket.ticketPriority,
+            description: newTicket.description,
+            status: newTicket.status,
+            reporter: newTicket.reporter,
+            assignee: newTicket.assignee,
+        });
     } catch(err){
         console.log('Error while creating ticket', err);
         res.status(500).send({

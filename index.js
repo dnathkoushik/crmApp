@@ -46,5 +46,7 @@ app.use(express.json());
 //Importing and using the auth routes
 const authRoutes = require('./routes/auth.route');
 const userRoutes = require('./routes/user.route');
+const ticketRoutes = require('./routes/ticket.route');
 app.use('/crmApp/api/v1', authRoutes);
 app.use('/crmApp/api/v1', userRoutes);
+app.use('/crmApp/api/v1', ticketRoutes);
