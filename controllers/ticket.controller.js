@@ -59,3 +59,15 @@ exports.updateTicket = async (req, res) => {
     }
 };
 
+//API to get all tickets
+exports.getAllTickets = async (req, res) => {
+    try{
+        const tickets = await ticketModel.find();
+        res.status(200).send(tickets);
+    } catch(err){
+        console.log('Error while fetching tickets', err);
+        res.status(500).send({
+            message: 'Internal Server Error while fetching tickets'
+        });
+    }
+};
