@@ -86,3 +86,18 @@ exports.deleteAllTickets = async (req, res) => {
         });
     }
 };
+
+//API to get ticket by ticketId
+exports.getTicketById = async (req, res) => {
+    const ticketId = req.params.ticketId;
+    try{
+        const ticket = await ticketModel.findOne({ _id: ticketId });
+        res.status(200).send(ticket);
+    }
+    catch(err){
+        console.log('Error while fetching ticket by id', err);
+        res.status(500).send({
+            message: 'Internal Server Error while fetching ticket by id'
+        });
+    }
+};
