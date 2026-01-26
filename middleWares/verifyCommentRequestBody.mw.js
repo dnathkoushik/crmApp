@@ -16,4 +16,6 @@ const validateCommentRequestBody = (req, res, next) => {
     next();
 }
 
-module.exports = validateCommentRequestBody;
+module.exports = {
+    validateCommentRequestBody : validateCommentRequestBody
+}
