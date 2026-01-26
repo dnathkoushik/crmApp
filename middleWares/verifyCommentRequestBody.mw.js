@@ -16,6 +16,18 @@ const validateCommentRequestBody = (req, res, next) => {
     next();
 }
 
+const validateTicketId = (req, res, next) => {
+    if(!req.params.ticketId || req.params.ticketId.trim() === ''){
+        return res.status(400).send({ message: 'Ticket ID is required in the URL parameters' });
+    }
+    const ticket = Ticket.findById(req.params.ticketId);
+    if (!ticket) {
+        return res.status(400).send({ message: 'Invalid Ticket ID' });
+    }
+    next();
+}
+
 module.exports = {
-    validateCommentRequestBody : validateCommentRequestBody
+    validateCommentRequestBody : validateCommentRequestBody,
+    validateTicketId : validateTicketId
 }

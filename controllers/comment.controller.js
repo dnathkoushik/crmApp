@@ -33,3 +33,18 @@ exports.createComment = async (req, res) => {
         });
     }
 };
+
+//get all comments for a ticket
+exports.getCommentsByTicketId = async (req, res) => {
+    const ticketId = req.params.ticketId;
+    try{
+        const comments = await commentModel.find({ ticketId: ticketId });
+        res.status(200).send(comments);
+    }
+    catch(err){
+        console.log('Error while fetching comments', err);
+        res.status(500).send({
+            message: 'Internal Server Error while fetching comments'
+        });
+    }
+};

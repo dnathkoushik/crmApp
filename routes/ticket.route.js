@@ -13,5 +13,6 @@ route.put('/tickets/:ticketId', [authMW.validateToken, ticketMW.validateTicketSt
 route.get('/tickets', authMW.validateToken, ticketController.getTickets);
 route.get('/tickets/:ticketId', authMW.validateToken, ticketController.getTicketById);
 route.post('/tickets/:ticketId/comments', [authMW.validateToken, commentMW.validateCommentRequestBody], commentController.createComment);
+route.get('/tickets/:ticketId/comments', [authMW.validateToken, commentMW.validateTicketId], commentController.getCommentsByTicketId);
 
 module.exports = route;
