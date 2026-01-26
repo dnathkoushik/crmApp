@@ -71,3 +71,18 @@ exports.getAllTickets = async (req, res) => {
         });
     }
 };
+
+//api to delete all the ticket
+exports.deleteAllTickets = async (req, res) => {
+    try{
+        await ticketModel.deleteMany();
+        res.status(200).send({
+            message: 'All tickets deleted successfully'
+        });
+    } catch(err){
+        console.log('Error while deleting tickets', err);
+        res.status(500).send({
+            message: 'Internal Server Error while deleting tickets'
+        });
+    }
+};
