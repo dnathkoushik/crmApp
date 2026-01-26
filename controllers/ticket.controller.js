@@ -59,6 +59,36 @@ exports.updateTicket = async (req, res) => {
     }
 };
 
+/*
+    Fetching tickets based on user roles
+    1. Admin should get all tickets
+    2. Engineer should get tickets assigned to him/her
+    3. Customer should get tickets created by him/her
+*/
+
+exports.getTickets = async (req, res) => {
+    const callingUserDetails = await userModel.findOne({ userId: req.userId });
+    let tickets;
+    try{
+        if(callingUserDetails.userType === constants.USER_TYPES.ADMIN){
+            //get all tickets
+            tickets = await ticketModel.find();
+        } else if(callingUserDetails.userType === constants.USER_TYPES.ENGINEER){
+            //get tickets assigned to this engineer
+            tickets = await ticketModel.find({ assignee: req.userId });
+        } else {
+            //get tickets created by this customer
+            tickets = await ticketModel.find({ reporter: req.userId });
+        }
+        res.status(200).send(tickets);
+    } catch(err){
+        console.log('Error while fetching tickets', err);
+        res.status(500).send({
+            message: 'Internal Server Error while fetching tickets'
+        });
+    }
+};
+
 //API to get all tickets
 exports.getAllTickets = async (req, res) => {
     try{

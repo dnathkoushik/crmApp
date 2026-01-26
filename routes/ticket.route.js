@@ -8,5 +8,6 @@ const authController = require('../controllers/auth.controller');
 
 route.post('/tickets', [authMW.validateToken, ticketMW.validateTicketRequestBody], ticketController.createTicket);
 route.put('/tickets/:ticketId', [authMW.validateToken, ticketMW.validateTicketStatus], ticketController.updateTicket);
+route.get('/tickets', authMW.validateToken, ticketController.getTickets);
 
 module.exports = route;
