@@ -101,3 +101,20 @@ exports.getTicketById = async (req, res) => {
         });
     }
 };
+
+//API to delete ticket by ticketId
+exports.deleteTicketById = async (req, res) => {
+    const ticketId = req.params.ticketId;
+    try{
+        await ticketModel.deleteOne({ _id: ticketId });
+        res.status(200).send({
+            message: 'Ticket deleted successfully'
+        });
+    }
+    catch(err){
+        console.log('Error while deleting ticket by id', err);
+        res.status(500).send({
+            message: 'Internal Server Error while deleting ticket by id'
+        });
+    }
+};
