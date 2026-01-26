@@ -122,6 +122,14 @@ exports.getTicketById = async (req, res) => {
     const ticketId = req.params.ticketId;
     try{
         const ticket = await ticketModel.findOne({ _id: ticketId });
+        const savedUser = await userModel.findOne({ userId: req.userId });
+
+        //I want to check if the right user is fetching the ticket
+        if(ticket.reporter !== req.userId && ticket.assignee !== req.userId && savedUser.userType !== constants.USER_TYPES.ADMIN){
+            return res.status(403).send({
+                message: 'Forbidden: You cannot access this ticket'
+            });
+        } 
         res.status(200).send(ticket);
     }
     catch(err){
